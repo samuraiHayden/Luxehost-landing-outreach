@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuxeHost Blueprint Banner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1600px;
+      height: 500px;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .banner {
+      width: 1600px;
+      height: 500px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Full bleed background photo */
+    .bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=90&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 55%;
+    }
+
+    /* Gradient overlay — fades left side to dark for legibility */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(12, 10, 8, 0.92) 0%,
+        rgba(12, 10, 8, 0.78) 35%,
+        rgba(12, 10, 8, 0.30) 65%,
+        rgba(12, 10, 8, 0.05) 100%
+      );
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      padding: 0 80px;
+      max-width: 780px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #D4AE58;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: #D4AE58;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 62px;
+      font-weight: 400;
+      line-height: 1.05;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: #D4AE58;
+    }
+
+    .desc {
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #9A7A2E, #D4AE58);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(212,174,88,0.4);
+    }
+
+    .meta-text { display: flex; flex-direction: column; gap: 3px; }
+
+    .meta-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #FFFFFF;
+      letter-spacing: 0.02em;
+    }
+
+    .meta-sub {
+      font-size: 12px;
+      color: #D4AE58;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .pills {
+      display: flex;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+    }
+
+    .pill span { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+    /* Gold accent line top */
+    .top-line {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, #B8953A, #D4AE58, transparent);
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <div class="bg"></div>
+    <div class="overlay"></div>
+    <div class="top-line"></div>
+
+    <div class="content">
+      <div class="eyebrow">Your Program</div>
+      <h1>The Luxe Host<br /><em>Blueprint</em></h1>
+      <p class="desc">The exact system to build a luxury STR business — without owning a single property to start.</p>
+      <div class="meta">
+        <div class="avatar">SC</div>
+        <div class="meta-text">
+          <span class="meta-name">Shariann Carlo</span>
+          <span class="meta-sub">Luxury STR Operator · 620+ five-star reviews · 4.9 ★ avg</span>
+        </div>
+        <div class="divider"></div>
+        <div class="pills">
+          <div class="pill"><span>11</span> Modules</div>
+          <div class="pill"><span>26</span> Videos</div>
+          <div class="pill"><span>48</span> Lessons</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
