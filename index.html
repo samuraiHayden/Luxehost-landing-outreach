@@ -1834,8 +1834,8 @@
   }
 
   // ── Booking form submit
-  const SUPABASE_URL = 'https://kaunwvyrtlwqlhctitui.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthdW53dnlydGx3cWxoY3RpdHVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDMxMDUsImV4cCI6MjA5NzgxOTEwNX0.MHvzIaGY0L7Zs5yLORQBU_rE1BhFPVkTaTKR-0sKQ3k';
+  const CRM_WEBHOOK = 'https://whatskewqfurcwnkuejz.supabase.co/functions/v1/incoming-lead';
+  const CRM_API_KEY = 'lh_live_uHWl2nHThqY4_jdKtO4ti3uZx5s1L-Ftz0LiknN-aOY';
 
   async function submitBooking(e) {
     e.preventDefault();
@@ -1846,24 +1846,30 @@
     const form = document.getElementById('bookingForm');
     const data = Object.fromEntries(new FormData(form));
 
+    // Map form fields to CRM incoming-lead payload
+    const nameParts = (data.name || '').trim().split(/\s+/);
+    const first_name = nameParts[0] || '';
+    const last_name = nameParts.slice(1).join(' ') || '';
+
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      const res = await fetch(CRM_WEBHOOK, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'return=minimal'
+          'Authorization': `Bearer ${CRM_API_KEY}`
         },
         body: JSON.stringify({
-          name: data.name,
+          first_name,
+          last_name,
           email: data.email,
           phone: data.phone || null,
-          properties_count: data.properties || null,
-          location: data.location || null,
-          service: data.service || null,
-          notes: data.notes || null,
-          source: 'landing-page'
+          source: 'landing-page',
+          notes: [
+            data.service ? `Service interest: ${data.service}` : null,
+            data.properties ? `Properties: ${data.properties}` : null,
+            data.location ? `Location: ${data.location}` : null,
+            data.notes || null
+          ].filter(Boolean).join('\n') || null
         })
       });
 
