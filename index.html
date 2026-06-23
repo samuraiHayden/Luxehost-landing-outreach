@@ -1834,19 +1834,50 @@
   }
 
   // ── Booking form submit
-  function submitBooking(e) {
+  const SUPABASE_URL = 'https://kaunwvyrtlwqlhctitui.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthdW53dnlydGx3cWxoY3RpdHVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDMxMDUsImV4cCI6MjA5NzgxOTEwNX0.MHvzIaGY0L7Zs5yLORQBU_rE1BhFPVkTaTKR-0sKQ3k';
+
+  async function submitBooking(e) {
     e.preventDefault();
     const btn = document.getElementById('bookingSubmitBtn');
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    // Simulate a brief async action, then show success
-    // TO CONNECT: replace this timeout with a fetch() to your backend or Formspree endpoint
-    setTimeout(() => {
+    const form = document.getElementById('bookingForm');
+    const data = Object.fromEntries(new FormData(form));
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          properties_count: data.properties || null,
+          location: data.location || null,
+          service: data.service || null,
+          notes: data.notes || null,
+          source: 'landing-page'
+        })
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       document.getElementById('bookingFormWrap').style.display = 'none';
       const success = document.getElementById('bookingSuccess');
       success.style.display = 'flex';
-    }, 900);
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Request My Free Call';
+      alert('Something went wrong. Please try again or email us directly.');
+      console.error('Lead submit error:', err);
+    }
   }
 </script>
 
